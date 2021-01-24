@@ -22,12 +22,12 @@ class Category
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=512, nullable=true)
      */
-    private $Description;
+    private $description;
 
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="Category")
@@ -46,24 +46,24 @@ class Category
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(?string $Name): self
+    public function setName(?string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(?string $Description): self
+    public function setDescription(?string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }

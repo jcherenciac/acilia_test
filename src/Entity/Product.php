@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Product
 {
+    const CURRENCY_EUR = 'EUR';
+    const CURRENCY_USD = 'USD';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -20,18 +22,28 @@ class Product
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $Category;
+    private $category;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $Price;
+    private $price;
+
+    /**
+     * @ORM\Column(type="string", length=3, nullable=true)
+     */
+    private $currency;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $featured;
 
     public function getId(): ?int
     {
@@ -40,36 +52,64 @@ class Product
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(?string $Name): self
+    public function setName(?string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getCategory(): ?Category
     {
-        return $this->Category;
+        return $this->category;
     }
 
-    public function setCategory(?Category $Category): self
+    public function setCategory(?Category $category): self
     {
-        $this->Category = $Category;
+        $this->category = $category;
 
         return $this;
     }
 
     public function getPrice(): ?int
     {
-        return $this->Price;
+        return $this->price;
     }
 
-    public function setPrice(?int $Price): self
+    public function setPrice(?int $price): self
     {
-        $this->Price = $Price;
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getCurrency(): ?string
+    {
+        return $this->currency;
+    }
+
+    public function setCurrency(string $currency): self
+    {
+        if (!in_array($currency, array(self::CURRENCY_EUR, self::CURRENCY_USD))) {
+            throw new \InvalidArgumentException("Invalid currency value.");
+        }
+
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    public function getFeatured(): ?bool
+    {
+        return $this->featured;
+    }
+
+    public function setFeatured(?bool $featured): self
+    {
+        $this->featured = $featured;
 
         return $this;
     }
